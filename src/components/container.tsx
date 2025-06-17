@@ -3,6 +3,7 @@ import { GenerateBlankMap } from "./utility";
 import DisplayMap from "./displayMap";
 import ListTileTypes from "./listTileTypes";
 import type { GameMap } from "./types";
+import ButtonTileBrush from "./buttonTileBrush";
 
 export default function Container() {
   const [gameMap, setGameMap] = useState(GenerateBlankMap());
@@ -20,6 +21,12 @@ export default function Container() {
     console.log("Ran function, tried to set " + y + "/" + x + " to " + modeSet);
     setGameMap(tempMap);
   }
+
+  function changeBrush(x: number) {
+    setModeSet(x);
+  }
+
+  const tileList = [0, 2, 3, 4, 5, 6];
 
   return (
     <>
@@ -39,6 +46,16 @@ export default function Container() {
             <div className="italic text-gray-400">{gameMap.Description}</div>
           </section>
           <ListTileTypes tiles={gameMap.Field.tiles} />
+          <div className="flex gap-2">
+            {tileList.map((s, key) => (
+              <ButtonTileBrush
+                tileId={s}
+                key={key}
+                activeID={modeSet}
+                onClick={changeBrush}
+              />
+            ))}
+          </div>
         </div>
       </section>
     </>
