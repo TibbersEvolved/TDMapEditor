@@ -11,8 +11,9 @@ export function GenerateBlankMap() {
     Difficulty: 0,
   };
   for (let i = 0; i < 20; i++) {
+    map.Field.tiles[i] = [];
     for (let j = 0; j < 20; j++) {
-      map.Field.tiles[j][i] = GenGrass(j, i);
+      map.Field.tiles[i][j] = GenGrass(j, i);
     }
   }
   return map;
