@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { GenerateBlankMap } from "./utility";
+import DisplayMap from "./displayMap";
 
 export default function Container() {
   const [gameMap, setGameMap] = useState(GenerateBlankMap());
@@ -10,7 +11,10 @@ export default function Container() {
         Map Editor Tool
       </div>
       <section className="grid grid-cols-2">
-        <div>Map Preview</div>
+        <section className="p-2">
+          <div className="text-center">Map Preview</div>
+          <DisplayMap tiles={gameMap.Field.tiles} />
+        </section>
         <div>
           <div>Map Console</div>
           <div>{gameMap.Name}</div>

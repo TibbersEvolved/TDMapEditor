@@ -23,7 +23,7 @@ export function GenGrass(xp: number, yp: number) {
   let rVal: Tile = {
     posX: xp,
     posY: yp,
-    tileId: 0,
+    tileId: Math.floor(Math.random() * 7),
   };
   return rVal;
 }
