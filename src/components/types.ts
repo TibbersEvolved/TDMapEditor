@@ -8,7 +8,7 @@ export type Field = {
   tiles: Tile[][];
 };
 
-export type Map = {
+export type GameMap = {
   Name: String;
   Description: String;
   Field: Field;

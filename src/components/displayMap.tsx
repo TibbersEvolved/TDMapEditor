@@ -1,16 +1,19 @@
+import type { funcSetTile } from "./container";
 import TileComponent from "./tileComponent";
 import type { Field } from "./types";
 
-export default function DisplayMap(prop: Field) {
+export default function DisplayMap(prop: props) {
   return (
     <>
       <div className="flex flex-col">
-        {prop.tiles.map((f, key) => {
+        {prop.field.tiles.map((f, key) => {
           return (
             <>
               <div key={key} className="flex">
                 {f.map((t, k2) => {
-                  return <TileComponent tileData={t} key={k2} />;
+                  return (
+                    <TileComponent tileData={t} key={k2} func={prop.func} />
+                  );
                 })}
               </div>
             </>
@@ -20,3 +23,8 @@ export default function DisplayMap(prop: Field) {
     </>
   );
 }
+
+type props = {
+  field: Field;
+  func: funcSetTile;
+};
