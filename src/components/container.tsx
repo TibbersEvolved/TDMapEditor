@@ -67,7 +67,10 @@ export default function Container() {
 
   function buildRoadState(xto: number, yto: number) {
     console.log("Entered the buildroadState function, with");
-    console.log("Xto:" + xto + " yto:" + yto + " tempRoadIndex:");
+    console.log(
+      "Xto:" + xto + " yto:" + yto + " tempRoadIndex: " + roadPoint.index
+    );
+    console.log("RoadX: " + roadPoint.x + " RoadY:" + roadPoint.y);
     let tempMap = copyGameMap();
     let tempRoadPoint: PathPointer = {
       x: roadPoint.x,
@@ -90,13 +93,14 @@ export default function Container() {
         setRoadPoint(tempRoadPoint);
       }
     } else {
-      let validation = ValidateRoad(roadPoint.x, roadPoint.y, xto, yto);
+      let validation = ValidateRoad(xto, yto, roadPoint.x, roadPoint.y);
+      console.log("Did validation with result: " + validation);
       if (validation != 0) {
         tempMap = buildRoad(
+          yto,
+          xto,
           roadPoint.x,
           roadPoint.y,
-          xto,
-          yto,
           tempMap,
           validation
         );

@@ -39,8 +39,8 @@ export function GenGrass(yp: number, xp: number) {
 //Case 2 = right path
 //Case 3 = left path
 export function ValidateRoad(
-  yp: number,
   xp: number,
+  yp: number,
   xpStart: number,
   ypStart: number
 ) {
@@ -50,10 +50,10 @@ export function ValidateRoad(
     }
   }
   if (yp === ypStart) {
-    if (xp > xpStart) {
+    if (xp < xpStart) {
       return 2;
     }
-    if (xp < xpStart) {
+    if (xp > xpStart) {
       return 3;
     }
   }
@@ -82,16 +82,28 @@ export function buildRoad(
     for (let i = ypStart; i <= yp; i++) {
       mapObj.Field.tiles[19 - i][19 - xp].tileId = 1;
     }
+    mapObj.Paths[mapObj.PathIndex].push({
+      x: xp,
+      y: yp,
+    });
   }
   if (roadType == 2) {
     for (let i = xpStart; i >= xp; i--) {
       mapObj.Field.tiles[19 - yp][19 - i].tileId = 1;
     }
+    mapObj.Paths[mapObj.PathIndex].push({
+      x: xp,
+      y: yp,
+    });
   }
   if (roadType == 3) {
     for (let i = xpStart; i <= xp; i++) {
       mapObj.Field.tiles[19 - yp][19 - i].tileId = 1;
     }
+    mapObj.Paths[mapObj.PathIndex].push({
+      x: xp,
+      y: yp,
+    });
   }
   return mapObj;
 }
