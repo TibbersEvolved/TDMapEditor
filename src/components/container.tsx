@@ -4,6 +4,7 @@ import DisplayMap from "./displayMap";
 import ListTileTypes from "./listTileTypes";
 import type { GameMap } from "./types";
 import ButtonTileBrush from "./buttonTileBrush";
+import DownloadButton from "./downloadButton";
 
 export const ThemeContext = createContext(false);
 
@@ -91,6 +92,7 @@ export default function Container() {
                 Display Grid
               </button>
             </div>
+            <DownloadButton map={gameMap} />
           </div>
         </section>
       </ThemeContext>
