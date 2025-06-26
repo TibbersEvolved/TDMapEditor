@@ -1,16 +1,19 @@
 import { createContext, useContext, useState } from "react";
-import { GenerateBlankMap } from "./utility";
+import { buildRoad, GenerateBlankMap } from "./utility";
 import DisplayMap from "./displayMap";
 import ListTileTypes from "./listTileTypes";
 import type { GameMap } from "./types";
 import ButtonTileBrush from "./buttonTileBrush";
 import DownloadButton from "./downloadButton";
+import BuildModebuttons from "./buildModeButtons";
 
 export const ThemeContext = createContext(false);
+export const BuildContext = createContext(0);
 
 export default function Container() {
   const [gameMap, setGameMap] = useState(GenerateBlankMap());
   const [modeSet, setModeSet] = useState(0);
+  const [buildMode, setBuildMode] = useState(0);
   const [displayGrid, setDisplayGrid] = useState(false);
   let buttonCol = "bg-emerald-200";
   if (displayGrid) {
@@ -46,6 +49,12 @@ export default function Container() {
     setGameMap(tempMap);
   }
 
+  function buildRoadState(xs: number, ys: number, xto: number, yto: number) {
+    let tempMap = copyGameMap();
+    tempMap = buildRoad(xs, ys, xto, yto, tempMap);
+    setGameMap(tempMap);
+  }
+
   function changeBrush(x: number) {
     setModeSet(x);
   }
@@ -54,52 +63,61 @@ export default function Container() {
 
   return (
     <>
-      <ThemeContext value={displayGrid}>
-        <div className="flex justify-center border-2 border-emerald-400">
-          Map Editor Tool
-        </div>
-        <section className="grid grid-cols-2">
-          <section className="p-2">
-            <div className="text-center">Map Preview</div>
-            <DisplayMap field={gameMap.Field} func={changeTile} />
-          </section>
-          <div className="flex flex-col  text-center p-2">
-            <div>Map Console</div>
-            <section className="flex flex-col border-2 border-rose-800 mb-2">
-              <div>Map Details</div>
-              <div>Map Name: {gameMap.Name}</div>
-              <div className="italic text-gray-400">{gameMap.Description}</div>
-            </section>
-            <ListTileTypes tiles={gameMap.Field.tiles} />
-            <div className="flex gap-2 justify-center mt-2">
-              {tileList.map((s, key) => (
-                <ButtonTileBrush
-                  tileId={s}
-                  key={key}
-                  activeID={modeSet}
-                  onClick={changeBrush}
-                />
-              ))}
-            </div>
-            <div className="flex justify-center">
-              <button
-                className={
-                  "mt-2 border-2 border-emerald-700 rounded-sm p-2 text-emerald-900 font-bold " +
-                  buttonCol
-                }
-                onClick={() => setDisplayGrid(!displayGrid)}
-              >
-                Display Grid
-              </button>
-            </div>
-            <DownloadButton map={gameMap} />
+      <BuildContext value={buildMode}>
+        <ThemeContext value={displayGrid}>
+          <div className="flex justify-center border-2 border-emerald-400">
+            Map Editor Tool
           </div>
-        </section>
-      </ThemeContext>
+          <section className="grid grid-cols-2">
+            <section className="p-2">
+              <div className="text-center">Map Preview</div>
+              <DisplayMap field={gameMap.Field} func={changeTile} />
+            </section>
+            <div className="flex flex-col  text-center p-2">
+              <div>Map Console</div>
+              <section className="flex flex-col border-2 border-rose-800 mb-2">
+                <div>Map Details</div>
+                <div>Map Name: {gameMap.Name}</div>
+                <div className="italic text-gray-400">
+                  {gameMap.Description}
+                </div>
+              </section>
+              <ListTileTypes tiles={gameMap.Field.tiles} />
+              <div className="flex gap-2 justify-center mt-2">
+                {tileList.map((s, key) => (
+                  <ButtonTileBrush
+                    tileId={s}
+                    key={key}
+                    activeID={modeSet}
+                    onClick={changeBrush}
+                  />
+                ))}
+              </div>
+              <BuildModebuttons func={(i) => setBuildMode(i)} />
+              <div className="flex justify-center">
+                <button
+                  className={
+                    "mt-2 border-2 border-emerald-700 rounded-sm p-2 text-emerald-900 font-bold " +
+                    buttonCol
+                  }
+                  onClick={() => setDisplayGrid(!displayGrid)}
+                >
+                  Display Grid
+                </button>
+              </div>
+              <DownloadButton map={gameMap} />
+            </div>
+          </section>
+        </ThemeContext>
+      </BuildContext>
     </>
   );
 }
 
 export type funcSetTile = {
   (y: number, x: number): void;
+};
+
+export type funcSetBuildMode = {
+  (int: number): void;
 };

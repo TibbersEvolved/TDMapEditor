@@ -56,3 +56,32 @@ export function ValidateRoad(
   }
   return 0;
 }
+
+export function buildRoad(
+  yp: number,
+  xp: number,
+  xpStart: number,
+  ypStart: number,
+  mapObj: GameMap
+) {
+  const roadType = ValidateRoad(yp, xp, xpStart, ypStart);
+  if (roadType == 0) {
+    console.log("invalid road");
+  }
+  if (roadType == 1) {
+    for (let i = ypStart; i <= yp; i++) {
+      mapObj.Field.tiles[19 - xp][19 - i].tileId = 1;
+    }
+  }
+  if (roadType == 2) {
+    for (let i = xpStart; i >= xp; i--) {
+      mapObj.Field.tiles[19 - i][19 - yp].tileId = 1;
+    }
+  }
+  if (roadType == 3) {
+    for (let i = xpStart; i <= xp; i++) {
+      mapObj.Field.tiles[19 - i][19 - yp].tileId = 1;
+    }
+  }
+  return mapObj;
+}
