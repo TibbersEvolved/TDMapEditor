@@ -1,8 +1,14 @@
 import { createContext, useContext, useState } from "react";
-import { buildRoad, GenerateBlankMap } from "./utility";
+import {
+  buildRoad,
+  EndRoad,
+  GenerateBlankMap,
+  StartPath,
+  ValidateRoad,
+} from "./utility";
 import DisplayMap from "./displayMap";
 import ListTileTypes from "./listTileTypes";
-import type { GameMap } from "./types";
+import type { GameMap, PathPointer } from "./types";
 import ButtonTileBrush from "./buttonTileBrush";
 import DownloadButton from "./downloadButton";
 import BuildModebuttons from "./buildModeButtons";
@@ -15,6 +21,7 @@ export default function Container() {
   const [modeSet, setModeSet] = useState(0);
   const [buildMode, setBuildMode] = useState(0);
   const [displayGrid, setDisplayGrid] = useState(false);
+  const [roadPoint, setRoadPoint] = useState(StartPath());
   let buttonCol = "bg-emerald-200";
   if (displayGrid) {
     buttonCol = "bg-emerald-400";
@@ -27,14 +34,23 @@ export default function Container() {
       Clime: gameMap.Clime,
       Field: gameMap.Field,
       Difficulty: gameMap.Difficulty,
+      Paths: gameMap.Paths,
+      PathIndex: gameMap.PathIndex,
     };
   }
 
   function changeTile(y: number, x: number) {
-    let tempMap: GameMap = copyGameMap();
-    tempMap.Field.tiles[19 - y][19 - x].tileId = modeSet;
-    console.log("Ran function, tried to set " + y + "/" + x + " to " + modeSet);
-    setGameMap(tempMap);
+    if (buildMode === 0) {
+      let tempMap: GameMap = copyGameMap();
+      tempMap.Field.tiles[19 - y][19 - x].tileId = modeSet;
+      console.log(
+        "Ran function, tried to set " + y + "/" + x + " to " + modeSet
+      );
+      setGameMap(tempMap);
+    }
+    if (buildMode === 1) {
+      buildRoadState(x, y);
+    }
   }
 
   function changeName(name: string) {
@@ -49,14 +65,68 @@ export default function Container() {
     setGameMap(tempMap);
   }
 
-  function buildRoadState(xs: number, ys: number, xto: number, yto: number) {
+  function buildRoadState(xto: number, yto: number) {
+    console.log("Entered the buildroadState function, with");
+    console.log("Xto:" + xto + " yto:" + yto + " tempRoadIndex:");
     let tempMap = copyGameMap();
-    tempMap = buildRoad(xs, ys, xto, yto, tempMap);
-    setGameMap(tempMap);
+    let tempRoadPoint: PathPointer = {
+      x: roadPoint.x,
+      y: roadPoint.y,
+      index: roadPoint.index,
+    };
+    if (tempRoadPoint.index == 0) {
+      if (yto === 0) {
+        tempRoadPoint.x = xto;
+        tempRoadPoint.y = yto;
+        tempRoadPoint.index = 1;
+        tempMap.Field.tiles[19 - yto][19 - xto].tileId = 1;
+        tempMap.Paths.push([]);
+        tempMap.Paths[tempMap.PathIndex].push({
+          x: xto,
+          y: yto,
+        });
+        console.log("Ran place first road thing");
+        setGameMap(tempMap);
+        setRoadPoint(tempRoadPoint);
+      }
+    } else {
+      let validation = ValidateRoad(roadPoint.x, roadPoint.y, xto, yto);
+      if (validation != 0) {
+        tempMap = buildRoad(
+          roadPoint.x,
+          roadPoint.y,
+          xto,
+          yto,
+          tempMap,
+          validation
+        );
+        tempRoadPoint.x = xto;
+        tempRoadPoint.y = yto;
+        tempRoadPoint.index = 1;
+      }
+      setGameMap(tempMap);
+      setRoadPoint(tempRoadPoint);
+    }
   }
 
   function changeBrush(x: number) {
     setModeSet(x);
+  }
+
+  function changeBuildMode(x: number) {
+    if (buildMode === x) {
+      return;
+    }
+    if (buildMode === 0 && x === 1) {
+      setRoadPoint(StartPath());
+      setBuildMode(x);
+    }
+    if (buildMode === 1 && x === 0) {
+      let tempMap = copyGameMap();
+      tempMap = EndRoad(tempMap);
+      setGameMap(tempMap);
+      setBuildMode(x);
+    }
   }
 
   const tileList = [0, 2, 3, 4, 5, 6];
@@ -93,7 +163,7 @@ export default function Container() {
                   />
                 ))}
               </div>
-              <BuildModebuttons func={(i) => setBuildMode(i)} />
+              <BuildModebuttons func={(i) => changeBuildMode(i)} />
               <div className="flex justify-center">
                 <button
                   className={

@@ -22,7 +22,6 @@ export default function DownloadButton(prop: props) {
 
 function GetJsonMap(mapObj: GameMap) {
   const json = JSON.stringify(mapObj);
-  console.log("Filename: " + mapObj.Name.toString());
   const file = new File([json], mapObj.Name.toString(), {
     type: "application/json",
   });

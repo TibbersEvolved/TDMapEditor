@@ -14,4 +14,21 @@ export type GameMap = {
   Field: Field;
   Clime: String;
   Difficulty: Number;
+  Paths: PathPoint[][];
+  PathIndex: number;
+};
+
+export type PathPoint = {
+  x: number;
+  y: number;
+};
+
+export type Path = {
+  path: PathPoint[];
+};
+
+export type PathPointer = {
+  index: number;
+  x: number;
+  y: number;
 };
