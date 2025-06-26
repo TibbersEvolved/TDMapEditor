@@ -11,7 +11,7 @@ export default function TileComponent(prop: props) {
   function getThing(val: boolean) {
     if (val) {
       return (
-        <div className="fixed z-10 text-xs">
+        <div className="absolute z-10 text-xs">
           {prop.tileData.posX + "/" + prop.tileData.posY}
         </div>
       );
@@ -23,7 +23,7 @@ export default function TileComponent(prop: props) {
     <>
       <div className="bg-yellow-100">
         <img
-          className="hover:opacity-75"
+          className="hover:opacity-75 absolute w-8 h-8"
           src={tileImages[tileId]}
           onClick={() => prop.func(prop.tileData.posY, prop.tileData.posX)}
           draggable="false"

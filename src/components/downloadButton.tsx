@@ -7,8 +7,12 @@ type props = {
 export default function DownloadButton(prop: props) {
   return (
     <>
-      <div className="flex justify-center bg-emerald-300">
-        <a href={GetJsonMap(prop.map)} download>
+      <div className="flex justify-center">
+        <a
+          href={GetJsonMap(prop.map)}
+          className="bg-emerald-300 mt-2 p-2 border-2 border-emerald-700"
+          download
+        >
           Download
         </a>
       </div>

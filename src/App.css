@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+.gameGrid {
+  display: grid;
+  grid-template-rows: repeat(20, 32px);
+  grid-template-columns: repeat(20, 32px);
+}

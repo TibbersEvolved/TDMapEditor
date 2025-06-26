@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import type { funcSetTile } from "./container";
 import TileComponent from "./tileComponent";
 import type { Field } from "./types";
@@ -5,17 +6,13 @@ import type { Field } from "./types";
 export default function DisplayMap(prop: props) {
   return (
     <>
-      <div className="flex flex-col">
-        {prop.field.tiles.map((f, key) => {
+      <div className="gameGrid">
+        {prop.field.tiles.map((f) => {
           return (
             <>
-              <div key={key} className="flex">
-                {f.map((t, k2) => {
-                  return (
-                    <TileComponent tileData={t} key={k2} func={prop.func} />
-                  );
-                })}
-              </div>
+              {f.map((t, k2) => {
+                return <TileComponent tileData={t} key={k2} func={prop.func} />;
+              })}
             </>
           );
         })}
