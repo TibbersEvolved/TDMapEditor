@@ -3,7 +3,7 @@ import { tileImages } from "./tileInfo";
 export default function ButtonTileBrush(prop: props) {
   let selected = "";
   if (prop.tileId === prop.activeID) {
-    selected = "border-2 border-zinc-500";
+    selected = "border-4 border-zinc-50";
   }
 
   return (
