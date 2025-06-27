@@ -10,7 +10,7 @@ export default function DownloadButton(prop: props) {
       <div className="flex justify-center">
         <a
           href={GetJsonMap(prop.map)}
-          className="bg-emerald-300 mt-2 p-2 border-2 border-emerald-700"
+          className="bg-blue-500 mt-2 p-2 rounded-sm"
           download
         >
           Download

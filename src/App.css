@@ -5,3 +5,16 @@
   grid-template-rows: repeat(20, 32px);
   grid-template-columns: repeat(20, 32px);
 }
+
+.bIStone {
+  background-image: url("/src/assets/plank.png");
+  background-size: 100%, 100%;
+}
+
+.bIWallpaper {
+  background-image: url("/src/assets/wallpaper.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+}

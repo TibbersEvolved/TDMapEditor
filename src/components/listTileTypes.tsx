@@ -21,7 +21,7 @@ export default function ListTileTypes(prop: Field) {
 
   return (
     <>
-      <section className="flex flex-col border-2 border-amber-800 bg-zinc-700">
+      <section className="flex flex-col rounded-md shadow-md border-2 border-amber-950 bIStone">
         <header className="font-bold">Map Economy</header>
         <div>Rock Tiles: {countRock}</div>
         <div>Gold Tiles: {countGold}</div>

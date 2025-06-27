@@ -6,9 +6,9 @@ export default function BuildModebuttons(prop: props) {
 
   function getColor(val: number) {
     if (current === val) {
-      return "bg-emerald-300";
+      return "bg-emerald-500";
     }
-    return "bg-emerald-400";
+    return "bg-stone-500";
   }
 
   return (

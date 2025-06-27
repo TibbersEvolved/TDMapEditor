@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import {
   buildRoad,
   EndRoad,
@@ -12,6 +12,7 @@ import type { GameMap, PathPointer } from "./types";
 import ButtonTileBrush from "./buttonTileBrush";
 import DownloadButton from "./downloadButton";
 import BuildModebuttons from "./buildModeButtons";
+import bgStony from "../assets/bgStony.png";
 
 export const ThemeContext = createContext(false);
 export const BuildContext = createContext(0);
@@ -22,9 +23,11 @@ export default function Container() {
   const [buildMode, setBuildMode] = useState(0);
   const [displayGrid, setDisplayGrid] = useState(false);
   const [roadPoint, setRoadPoint] = useState(StartPath());
-  let buttonCol = "bg-emerald-200";
+  let buttonCol = "bg-stone-500";
+  let displayGridButtonText = "Show Grid";
   if (displayGrid) {
-    buttonCol = "bg-emerald-400";
+    buttonCol = "bg-emerald-500";
+    displayGridButtonText = "Hide Grid";
   }
 
   function copyGameMap() {
@@ -149,7 +152,11 @@ export default function Container() {
             </section>
             <div className="flex flex-col  text-center p-2">
               <div>Map Console</div>
-              <section className="flex flex-col border-2 border-rose-800 mb-2">
+              <section
+                className={
+                  "flex flex-col rounded-md shadow-md border-2 border-amber-950 mb-2 bIStone "
+                }
+              >
                 <div>Map Details</div>
                 <div>Map Name: {gameMap.Name}</div>
                 <div className="italic text-gray-400">
@@ -170,13 +177,10 @@ export default function Container() {
               <BuildModebuttons func={(i) => changeBuildMode(i)} />
               <div className="flex justify-center">
                 <button
-                  className={
-                    "mt-2 border-2 border-emerald-700 rounded-sm p-2 text-emerald-900 font-bold " +
-                    buttonCol
-                  }
+                  className={"mt-2  rounded-sm p-2 " + buttonCol}
                   onClick={() => setDisplayGrid(!displayGrid)}
                 >
-                  Display Grid
+                  {displayGridButtonText}
                 </button>
               </div>
               <DownloadButton map={gameMap} />
