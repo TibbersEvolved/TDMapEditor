@@ -69,11 +69,6 @@ export default function Container() {
   }
 
   function buildRoadState(xto: number, yto: number) {
-    console.log("Entered the buildroadState function, with");
-    console.log(
-      "Xto:" + xto + " yto:" + yto + " tempRoadIndex: " + roadPoint.index
-    );
-    console.log("RoadX: " + roadPoint.x + " RoadY:" + roadPoint.y);
     let tempMap = copyGameMap();
     let tempRoadPoint: PathPointer = {
       x: roadPoint.x,
@@ -129,6 +124,10 @@ export default function Container() {
       setBuildMode(x);
     }
     if (buildMode === 1 && x === 0) {
+      if (roadPoint.index == 0) {
+        setBuildMode(x);
+        return;
+      }
       let tempMap = copyGameMap();
       tempMap = EndRoad(tempMap);
       setGameMap(tempMap);
@@ -142,8 +141,8 @@ export default function Container() {
     <>
       <BuildContext value={buildMode}>
         <ThemeContext value={displayGrid}>
-          <div className="flex justify-center border-2 border-emerald-400">
-            Map Editor Tool
+          <div className="flex justify-center font-extrabold">
+            Tibbers Map Editor
           </div>
           <section className="grid grid-cols-2">
             <section className="p-2">
