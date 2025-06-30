@@ -9,8 +9,8 @@ export type Field = {
 };
 
 export type GameMap = {
-  Name: String;
-  Description: String;
+  Name: string;
+  Description: string;
   Field: Field;
   Clime: String;
   Difficulty: Number;

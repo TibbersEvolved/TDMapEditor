@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import type { funcSetTile } from "./container";
 import TileComponent from "./tileComponent";
 import type { Field } from "./types";

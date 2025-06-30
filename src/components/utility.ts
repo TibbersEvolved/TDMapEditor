@@ -1,10 +1,6 @@
-import { createContext } from "react";
 import type { GameMap, PathPoint, PathPointer, Tile } from "./types";
 
-const ThemeContext = createContext(false);
-
 export function GenerateBlankMap() {
-  let tempArray: PathPoint[] = [];
   let map: GameMap = {
     Name: "New Map",
     Description: "Describe your creation",

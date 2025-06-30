@@ -12,7 +12,8 @@ import type { GameMap, PathPointer } from "./types";
 import ButtonTileBrush from "./buttonTileBrush";
 import DownloadButton from "./downloadButton";
 import BuildModebuttons from "./buildModeButtons";
-import bgStony from "../assets/bgStony.png";
+import MapNameForm from "./mapNameForm";
+import MapDescriptionForm from "./mapDescriptionForm";
 
 export const ThemeContext = createContext(false);
 export const BuildContext = createContext(0);
@@ -157,9 +158,12 @@ export default function Container() {
                 }
               >
                 <div>Map Details</div>
-                <div>Map Name: {gameMap.Name}</div>
+                <MapNameForm name={gameMap.Name} func={(e) => changeName(e)} />
                 <div className="italic text-gray-400">
-                  {gameMap.Description}
+                  <MapDescriptionForm
+                    name={gameMap.Description}
+                    func={(e) => changeDescription(e)}
+                  />
                 </div>
               </section>
               <ListTileTypes tiles={gameMap.Field.tiles} />
