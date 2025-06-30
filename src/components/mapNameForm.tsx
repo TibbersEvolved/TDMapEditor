@@ -13,7 +13,7 @@ export default function MapNameForm(props: prop) {
     <>
       <form onSubmit={(e) => formAction(e)}>
         <input type="text" name="message" placeholder={name} />
-        <button type="submit">Send</button>
+        <button type="submit">Confirm</button>
       </form>
     </>
   );

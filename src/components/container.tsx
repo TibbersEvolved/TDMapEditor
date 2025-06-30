@@ -187,6 +187,14 @@ export default function Container() {
                 </button>
               </div>
               <DownloadButton map={gameMap} />
+              <div className="flex justify-center">
+                <button
+                  className="mt-2  rounded-sm p-2 bg-red-500 "
+                  onClick={() => setGameMap(GenerateBlankMap())}
+                >
+                  Reset
+                </button>
+              </div>
             </div>
           </section>
         </ThemeContext>
